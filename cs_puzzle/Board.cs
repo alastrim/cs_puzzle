@@ -20,14 +20,16 @@ namespace cs_puzzle
 
         public void print ()
         {
+            string fmtstring = N > 3 ? "{0, 2}" : "{0, 1}";
+            string empstr = N > 3 ? "  " : " ";
             for (int i = 0; i < N; i++)
             {
                 for (int j = 0; j < N; j++)
                 {
                     if (m_tiles[i, j] > 0)
-                        Console.Write (m_tiles[i, j]);
+                        Console.Write (String.Format (fmtstring, m_tiles[i, j]));
                     else
-                        Console.Write (" ");
+                        Console.Write (empstr);
                     Console.Write (" ");
                 }
                 Console.WriteLine ();
@@ -88,6 +90,7 @@ namespace cs_puzzle
         public int manhattan ()
         {
             int result = 0;
+            int max = 0;
             for (int i = 0; i < N; i++)
                 for (int j = 0; j < N; j++)
                 {
@@ -96,7 +99,10 @@ namespace cs_puzzle
                     int final_i = m_tiles[i, j] / N;
                     int final_j = m_tiles[i, j] % N;
 
-                    result += Math.Abs (final_i - i) + Math.Abs (final_j - j);
+                    int curr = Math.Abs (final_i - i) + Math.Abs (final_j - j);
+                    if (curr > max)
+                        max = curr;
+                    result += curr;
                 }
             return result;
         }
@@ -117,16 +123,10 @@ namespace cs_puzzle
 
         public override int GetHashCode ()
         {
-            int result = 1;
-            for (int i = 0; i < N; i++)
-                for (int j = 0; j < N; j++)
-                    result = result * 10 + m_tiles[i, j];
-            return result;
-
             int hc = 0;
             for (int i = 0; i < N; i++)
                 for (int j = 0; j < N; j++)
-                    hc = unchecked (hc * 17 + m_tiles[i, j]);
+                    hc = unchecked (hc * 314159 + m_tiles[i, j]);
             return hc;
         }
     }

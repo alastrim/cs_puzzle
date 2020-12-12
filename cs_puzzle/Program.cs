@@ -12,7 +12,7 @@ namespace cs_puzzle
         {
             for (int i = 0; i < 10; i++)
             {
-                Board starting_board = Board.get_random_board (3, 100);
+                Board starting_board = Board.get_random_board (4, 100);
                 Console.WriteLine ("Solving board:");
                 starting_board.print ();
 
@@ -23,8 +23,6 @@ namespace cs_puzzle
                 //Console.WriteLine ("Solution:");
                 //foreach (Board b in solution)
                 //    b.print ();
-
-                //Console.WriteLine ("\n\n\n");
             }
         }
     }

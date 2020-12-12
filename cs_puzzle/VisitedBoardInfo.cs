@@ -5,14 +5,14 @@ namespace cs_puzzle
 {
     class VisitedBoardInfo : IEquatable<VisitedBoardInfo>
     {
-        public VisitedBoardInfo (int prev_board_hash, int prev_boards_num, Board board)
+        public VisitedBoardInfo (int prev_boards_num, VisitedBoardInfo prev_board_info, Board board)
         {
-            m_prev_board_hash = prev_board_hash;
             m_prev_boards_num = prev_boards_num;
+            m_prev_board_info = prev_board_info;
             m_board = board;
         }
-        public int m_prev_board_hash;
         public int m_prev_boards_num;
+        public VisitedBoardInfo m_prev_board_info;
         public Board m_board;
 
         public override bool Equals (object obj)

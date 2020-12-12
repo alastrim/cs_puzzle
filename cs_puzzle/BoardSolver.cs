@@ -11,7 +11,7 @@ namespace cs_puzzle
         {
             var visited_boards = new Dictionary<int, VisitedBoardInfo> ();
             var queue = new SimplePriorityQueue<VisitedBoardInfo, int> ();
-            queue.Enqueue (new VisitedBoardInfo (-1, 0, starting_board), 0);
+            queue.Enqueue (new VisitedBoardInfo (0, null, starting_board), 0);
 
             int max_queue_size = 0;
             VisitedBoardInfo current_board_info;
@@ -39,7 +39,7 @@ namespace cs_puzzle
 
                     int prev_boards_num = current_board_info.m_prev_boards_num + 1;
                     int priority = move.manhattan () + prev_boards_num;
-                    queue.Enqueue (new VisitedBoardInfo (current_board.GetHashCode (), prev_boards_num, move), priority);
+                    queue.Enqueue (new VisitedBoardInfo (prev_boards_num, current_board_info, move), priority);
                 }
 
             } while (queue.Count > 0);
@@ -51,7 +51,7 @@ namespace cs_puzzle
             }
 
             List<Board> solution_boards = new List<Board> ();
-            for (VisitedBoardInfo b = current_board_info; b.m_prev_boards_num > 0; b = visited_boards[b.m_prev_board_hash])
+            for (VisitedBoardInfo b = current_board_info; b.m_prev_boards_num > 0; b = b.m_prev_board_info)
                 solution_boards.Add (b.m_board);
 
             solution_boards.Reverse ();
