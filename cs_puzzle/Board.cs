@@ -88,11 +88,14 @@ namespace cs_puzzle
         public int manhattan ()
         {
             int result = 0;
-            for (int i = 0; i < m_tiles.GetLength (0); i++)
-                for (int j = 0; j < m_tiles.GetLength (1); j++)
+            for (int i = 0; i < N; i++)
+                for (int j = 0; j < N; j++)
                 {
+                    if (m_tiles[i, j] == 0)
+                        continue;
                     int final_i = m_tiles[i, j] / N;
                     int final_j = m_tiles[i, j] % N;
+
                     result += Math.Abs (final_i - i) + Math.Abs (final_j - j);
                 }
             return result;
@@ -105,12 +108,26 @@ namespace cs_puzzle
 
         public bool Equals (Board other)
         {
-            return other != null && EqualityComparer<int[,]>.Default.Equals (m_tiles, other.m_tiles);
+            for (int i = 0; i < N; i++)
+                for (int j = 0; j < N; j++)
+                    if (m_tiles[i, j] != other.m_tiles[i, j])
+                        return false;
+            return true;
         }
 
         public override int GetHashCode ()
         {
-            return HashCode.Combine (m_tiles);
+            int result = 1;
+            for (int i = 0; i < N; i++)
+                for (int j = 0; j < N; j++)
+                    result = result * 10 + m_tiles[i, j];
+            return result;
+
+            int hc = 0;
+            for (int i = 0; i < N; i++)
+                for (int j = 0; j < N; j++)
+                    hc = unchecked (hc * 17 + m_tiles[i, j]);
+            return hc;
         }
     }
 }
